@@ -18,7 +18,6 @@ export default {
   props: {
     editorLanguage: {
       type: String,
-      default: "javascript",
       required: true,
     },
   },

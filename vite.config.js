@@ -1,8 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from "node:url";
-import tailwind from "tailwindcss";
-import autoprefixer from "autoprefixer";
 
 export default defineConfig({
   plugins: [vue()],
@@ -11,13 +9,9 @@ export default defineConfig({
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
-    extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
+    extensions: [".js", ".json", ".jsx", ".mjs", ".vue"],
   },
-  css: {
-    postcss: {
-      plugins: [tailwind(), autoprefixer()],
-    },
-  },
+
   server: {
     port: 5173,
   },
