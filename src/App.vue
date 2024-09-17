@@ -32,7 +32,7 @@ import LanguageSelector from "@/components/languageSelector/LanguageSelector.vue
 export default {
   components: {
     CodeEditor,
-    Button,
+    LanguageSelector,
   },
 };
 </script>
