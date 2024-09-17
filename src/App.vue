@@ -1,14 +1,4 @@
-<script setup>
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-</script>
+<script setup></script>
 
 <template>
   <div class="flex flex-col justify-center items-center h-screen">
@@ -40,13 +30,6 @@ export default {
   components: {
     CodeEditor,
     Button,
-    // Select,
-    // SelectContent,
-    // SelectGroup,
-    // SelectItem,
-    // SelectLabel,
-    // SelectTrigger,
-    // SelectValue,
   },
 };
 </script>
