@@ -12,7 +12,7 @@ const generateClientId = () => {
   return clientId;
 };
 
-const setupWebSocket = (webSocket) => {
+const setupWebSocket = (webSocket, onMessageFunction) => {
   webSocket.onopen = () => {
     console.log("WebSocket connection established");
   };
@@ -21,18 +21,20 @@ const setupWebSocket = (webSocket) => {
     console.log("WebSocket connection closed");
   };
 
+  webSocket.onmessage = onMessageFunction;
+
   webSocket.onerror = (error) => {
     console.error("WebSocket error: ", error);
   };
 };
 
 export class WebSocketInstance {
-  constructor() {
+  constructor(onMessageFunction) {
     this.ws = createWebSocket();
     this.clientId = generateClientId();
     this.isApplyingRemoteChange = false;
 
-    setupWebSocket(this.ws);
+    setupWebSocket(this.ws, onMessageFunction);
   }
 
   send(data) {

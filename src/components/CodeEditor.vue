@@ -31,28 +31,30 @@ export default {
   methods: {
     handleEditorMount(editor) {
       this.editorRef = editor;
-
-      let webSocket = new WebSocketInstance();
-
-      webSocket.onmessage = (event) => {
+      let onMessage = function (event) {
         let message = JSON.parse(event.data);
-        console.log(message);
-        if (message.clientId !== clientId) {
+        if (message.clientId !== webSocket.clientId) {
           this.applyingRemoteChange = true;
-          editor.executeEdits("remote", [
-            {
-              range: new monaco.Range(
-                message.change.range.startLineNumber,
-                message.change.range.startColumn,
-                message.change.range.endLineNumber,
-                message.change.range.endColumn
-              ),
-              text: message.change.text,
-            },
-          ]);
-          this.applyingRemoteChange = false;
+          try {
+            editor.executeEdits("remote", [
+              {
+                range: new monaco.Range(
+                  message.change.range.startLineNumber,
+                  message.change.range.startColumn,
+                  message.change.range.endLineNumber,
+                  message.change.range.endColumn
+                ),
+                text: message.change.text,
+              },
+            ]);
+            this.applyingRemoteChange = false;
+          } catch (error) {
+            console.log(error);
+          }
         }
       };
+
+      let webSocket = new WebSocketInstance(onMessage);
 
       this.editorRef.onDidChangeModelContent((event) => {
         if (!webSocket.applyingRemoteChange) {
