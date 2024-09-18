@@ -56,22 +56,13 @@ export default {
       this.editorRef.onDidChangeModelContent((event) => {
         if (!webSocket.applyingRemoteChange) {
           let change = event.changes[0];
-          console.log(
-            JSON.stringify({
-              change: {
-                range: change.range,
-                text: change.text,
-              },
-            })
-          );
-          webSocket.send(
-            JSON.stringify({
-              change: {
-                range: change.range,
-                text: change.text,
-              },
-            })
-          );
+
+          webSocket.send({
+            change: {
+              range: change.range,
+              text: change.text,
+            },
+          });
         }
       });
     },
