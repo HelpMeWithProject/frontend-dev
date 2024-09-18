@@ -35,7 +35,7 @@ export default {
         let message = JSON.parse(event.data);
         if (message.clientId !== webSocket.clientId) {
           console.log(message);
-          this.applyingRemoteChange = true;
+          webSocket.applyingRemoteChange = true;
           editor.executeEdits("remote", [
             {
               range: new monaco.Range(
@@ -47,7 +47,7 @@ export default {
               text: message.change.text,
             },
           ]);
-          this.applyingRemoteChange = false;
+          webSocket.applyingRemoteChange = false;
         }
       };
 
