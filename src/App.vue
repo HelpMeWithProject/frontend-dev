@@ -12,11 +12,14 @@ import { editorLanguageSelectorStore } from "@/components/languageSelector/store
       Monaco Editor Test
     </h1>
     <LanguageSelector class="mb-4"></LanguageSelector>
-    <div class="w-1/2 bg-[#1e1e1e] pt-8 pb-4 rounded-lg mb-8">
-      <CodeEditor
-        class="mb-4"
-        :editorLanguage="editorLanguageSelectorStore.currentLanguageValue"
-      ></CodeEditor>
+    <div class="flex gap-8 mb-8">
+      <FileBrowser class=""></FileBrowser>
+      <div class="min-w-[32rem] bg-[#1e1e1e] pt-8 pb-4 rounded-lg">
+        <CodeEditor
+          class=""
+          :editorLanguage="editorLanguageSelectorStore.currentLanguageValue"
+        ></CodeEditor>
+      </div>
     </div>
     <button
       class="border-2 border-purple-500 px-4 py-2 rounded-md hover:bg-purple-500 transition-all duration-300"
@@ -28,7 +31,7 @@ import { editorLanguageSelectorStore } from "@/components/languageSelector/store
 <script>
 import CodeEditor from "@/components/CodeEditor.vue";
 import LanguageSelector from "@/components/languageSelector/LanguageSelector.vue";
-
+import FileBrowser from "@/components/fileBrowser/FileBrowser.vue";
 export default {
   components: {
     CodeEditor,
