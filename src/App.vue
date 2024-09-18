@@ -28,7 +28,6 @@ import { editorLanguageSelectorStore } from "@/components/languageSelector/store
 <script>
 import CodeEditor from "@/components/CodeEditor.vue";
 import LanguageSelector from "@/components/languageSelector/LanguageSelector.vue";
-
 export default {
   components: {
     CodeEditor,
