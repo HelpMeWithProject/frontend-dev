@@ -39,6 +39,11 @@ export default {
             webSocket.send("ready");
             handshake = true;
           }
+        } else if (!webSocket.hasInitialFile) {
+          let message = event.data;
+          let initialContent = message;
+
+          this.code = initialContent;
         }
         let message = JSON.parse(event.data);
         if (message.clientId !== webSocket.clientId) {
