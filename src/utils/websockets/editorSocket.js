@@ -12,24 +12,6 @@ const generateClientId = () => {
   return clientId;
 };
 
-const setupWebSocket = (webSocket, onMessageFunction) => {
-  webSocket.onopen = () => {
-    console.log("WebSocket connection established");
-    console.log("Sending clientId: ", this.clientId);
-    webSocket.send(this.clientId);
-  };
-
-  webSocket.onclose = () => {
-    console.log("WebSocket connection closed");
-  };
-
-  webSocket.onmessage = onMessageFunction;
-
-  webSocket.onerror = (error) => {
-    console.error("WebSocket error: ", error);
-  };
-};
-
 export class WebSocketInstance {
   constructor(onMessageFunction) {
     this.ws = createWebSocket("Filipko");
@@ -44,6 +26,8 @@ export class WebSocketInstance {
   setupWebSocket(onMessageFunction) {
     this.ws.onopen = () => {
       console.log("WebSocket connection established");
+      console.log("Sending clientId: ", this.clientId);
+      webSocket.send(this.clientId);
     };
 
     this.ws.onclose = () => {
