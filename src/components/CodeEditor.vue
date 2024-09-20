@@ -35,18 +35,17 @@ export default {
       let onMessage = function (event) {
         if (!webSocket.handShake) {
           let message = event.data;
-          if (message === "Test") {
-            webSocket.send("ready");
-            handshake = true;
+          if (message === webSocket.name) {
+            console.log("Sending ready")
+            webSocket.ws.send("ready");
+            webSocket.handShake = true
           }
         } else if (!webSocket.hasInitialFile) {
-          let message = event.data;
-          let initialContent = message;
-
-          this.code = initialContent;
-        }
-        let message = JSON.parse(event.data);
-        if (message.clientId !== webSocket.clientId) {
+          console.log("Recievied file")
+          this.code = event.data;
+          webSocket.hasInitialFile = true
+        } else {
+          let message = JSON.parse(event.data);
           console.log(message);
           webSocket.applyingRemoteChange = true;
           editor.executeEdits("remote", [
@@ -62,6 +61,7 @@ export default {
           ]);
           webSocket.applyingRemoteChange = false;
         }
+        
       };
 
       let webSocket = new WebSocketInstance(onMessage);

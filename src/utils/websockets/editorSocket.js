@@ -14,7 +14,8 @@ const generateClientId = () => {
 
 export class WebSocketInstance {
   constructor(onMessageFunction) {
-    this.ws = createWebSocket("Filipko");
+    this.name = "Filipko"
+    this.ws = createWebSocket(this.name);
     this.clientId = generateClientId();
     this.isApplyingRemoteChange = false;
     this.handShake = false;
@@ -27,7 +28,7 @@ export class WebSocketInstance {
     this.ws.onopen = () => {
       console.log("WebSocket connection established");
       console.log("Sending clientId: ", this.clientId);
-      webSocket.send(this.clientId);
+      this.ws.send(this.clientId);
     };
 
     this.ws.onclose = () => {
