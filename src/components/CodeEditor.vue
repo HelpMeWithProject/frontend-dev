@@ -31,7 +31,15 @@ export default {
   methods: {
     handleEditorMount(editor) {
       this.editorRef = editor;
+
       let onMessage = function (event) {
+        if (!webSocket.handShake) {
+          let message = event.data;
+          if (message === "Test") {
+            webSocket.send("ready");
+            handshake = true;
+          }
+        }
         let message = JSON.parse(event.data);
         if (message.clientId !== webSocket.clientId) {
           console.log(message);

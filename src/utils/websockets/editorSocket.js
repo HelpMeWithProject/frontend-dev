@@ -1,8 +1,8 @@
 "use strict";
 
-const createWebSocket = () => {
+const createWebSocket = (name) => {
   let ws = new WebSocket(
-    "wss://backend-test-production-d6fc.up.railway.app/ws"
+    "wss://backend-test-production-d6fc.up.railway.app/ws?name=" + name
   );
   return ws;
 };
@@ -15,6 +15,7 @@ const generateClientId = () => {
 const setupWebSocket = (webSocket, onMessageFunction) => {
   webSocket.onopen = () => {
     console.log("WebSocket connection established");
+    webSocket.send(this.clientId);
   };
 
   webSocket.onclose = () => {
@@ -33,8 +34,26 @@ export class WebSocketInstance {
     this.ws = createWebSocket();
     this.clientId = generateClientId();
     this.isApplyingRemoteChange = false;
+    this.handShake = false;
+    this.hasInitialFile = false;
 
-    setupWebSocket(this.ws, onMessageFunction);
+    this.setupWebSocket(onMessageFunction);
+  }
+
+  setupWebSocket(onMessageFunction) {
+    this.ws.onopen = () => {
+      console.log("WebSocket connection established");
+    };
+
+    this.ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    this.ws.onmessage = onMessageFunction;
+
+    this.ws.onerror = (error) => {
+      console.error("WebSocket error: ", error);
+    };
   }
 
   send(data) {
