@@ -1,8 +1,10 @@
 <template>
   <button
     :class="[
-      'py-2 px-3 rounded-lg text-zinc-100 tracking-wide transition-all duration-300',
-      isActive ? ' bg-purple-600' : '',
+      'py-2 px-3 rounded-lg  tracking-wide transition-all duration-300',
+      isActive
+        ? ' bg-purple-600 text-zinc-100'
+        : 'text-zinc-400 hover:text-zinc-100',
     ]"
     @click="handleButtonClick()"
   >
