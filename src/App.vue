@@ -22,4 +22,8 @@ export default {
 body {
   font-family: "Poppins", sans-serif;
 }
+
+.purple-border-focus {
+  @apply focus:outline-purple-700 focus:outline-none;
+}
 </style>
