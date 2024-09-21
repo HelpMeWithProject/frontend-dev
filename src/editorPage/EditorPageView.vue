@@ -16,7 +16,7 @@
 <script>
 // import CodeEditor from "@/components/CodeEditor.vue";
 import FileBrowser from "@/components/fileBrowser/FileBrowser.vue";
-import LanguageSelector from "@/components/LanguageSelector/LanguageSelector.vue";
+import LanguageSelector from "@/components/languageSelector/LanguageSelector.vue";
 // import { editorLanguageSelectorStore } from "@/components/languageSelector/store/editorLanguageSelectorStore.js";
 
 export default {
