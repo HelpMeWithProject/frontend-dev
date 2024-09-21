@@ -32,13 +32,22 @@ export default {
     handleEditorMount(editor) {
       this.editorRef = editor;
 
-      let webSocket = new WebSocketInstance();
-
-      webSocket.onmessage = (event) => {
-        let message = JSON.parse(event.data);
-        console.log(message);
-        if (message.clientId !== clientId) {
-          this.applyingRemoteChange = true;
+      let onMessage = function (event) {
+        if (!webSocket.handShake) {
+          let message = event.data;
+          if (message === webSocket.name) {
+            console.log("Sending ready")
+            webSocket.ws.send("ready");
+            webSocket.handShake = true
+          }
+        } else if (!webSocket.hasInitialFile) {
+          console.log("Recievied file")
+          this.code = event.data;
+          webSocket.hasInitialFile = true
+        } else {
+          let message = JSON.parse(event.data);
+          console.log(message);
+          webSocket.applyingRemoteChange = true;
           editor.executeEdits("remote", [
             {
               range: new monaco.Range(
@@ -50,21 +59,23 @@ export default {
               text: message.change.text,
             },
           ]);
-          this.applyingRemoteChange = false;
+          webSocket.applyingRemoteChange = false;
         }
+        
       };
+
+      let webSocket = new WebSocketInstance(onMessage);
 
       this.editorRef.onDidChangeModelContent((event) => {
         if (!webSocket.applyingRemoteChange) {
           let change = event.changes[0];
-          webSocket.send(
-            JSON.stringify({
-              change: {
-                range: change.range,
-                text: change.text,
-              },
-            })
-          );
+
+          webSocket.send({
+            change: {
+              range: change.range,
+              text: change.text,
+            },
+          });
         }
       });
     },
