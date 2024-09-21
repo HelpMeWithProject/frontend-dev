@@ -1,6 +1,5 @@
 <script setup lang="js">
-import { editorLanguageOptions } from "@/components/languageSelector/store/editorLanguageSelectorStore.js";
-import {editorLanguageSelectorStore} from "@/components/languageSelector/store/editorLanguageSelectorStore.js";
+import { editorLanguageOptions, editorLanguageSelectorStore } from "@/components/languageSelector/store/editorLanguageSelectorStore.js";
 </script>
 <template>
   <div
@@ -22,7 +21,7 @@ import {editorLanguageSelectorStore} from "@/components/languageSelector/store/e
 </template>
 
 <script lang="js">
-import LanguageSelectorButton from "@/components/LanguageSelector/LanguageSelectorButton.vue";
+import LanguageSelectorButton from "@/components/languageSelector/LanguageSelectorButton.vue";
 
 export default {
   name: "LanguageSelector",

@@ -1,42 +1,13 @@
-<script setup>
-import { editorLanguageSelectorStore } from "@/components/languageSelector/store/editorLanguageSelectorStore.js";
-</script>
+<script setup></script>
 
 <template>
-  <div
-    class="flex flex-col justify-center items-center h-screen bg-zinc-900 text-zinc-100"
-  >
-    <h1
-      class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-16"
-    >
-      Monaco Editor Test
-    </h1>
-    <LanguageSelector class="mb-4"></LanguageSelector>
-    <div class="flex gap-8 mb-8">
-      <FileBrowser class=""></FileBrowser>
-      <div class="min-w-[32rem] bg-[#1e1e1e] pt-8 pb-4 rounded-lg">
-        <CodeEditor
-          class=""
-          :editorLanguage="editorLanguageSelectorStore.currentLanguageValue"
-        ></CodeEditor>
-      </div>
-    </div>
-    <button
-      class="border-2 border-purple-500 px-4 py-2 rounded-md hover:bg-purple-500 transition-all duration-300"
-    >
-      Test Button
-    </button>
+  <div class="">
+    <RouterView></RouterView>
   </div>
 </template>
 <script>
-import CodeEditor from "@/components/CodeEditor.vue";
-import LanguageSelector from "@/components/languageSelector/LanguageSelector.vue";
-import FileBrowser from "@/components/fileBrowser/FileBrowser.vue";
 export default {
-  components: {
-    CodeEditor,
-    LanguageSelector,
-  },
+  nampe: "app",
 };
 </script>
 
