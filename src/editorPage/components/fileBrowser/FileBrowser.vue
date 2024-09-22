@@ -2,8 +2,8 @@
 import { fileBrowserStates } from "./fileBrowserStore";
 </script>
 <template>
-  <div
-    class="rounded-md bg-zinc-800 py-3 px-3 min-w-40 max-w-96 border border-zinc-700"
+  <section
+    class="rounded-md bg-zinc-800 py-3 px-3 min-w-40 max-w-96 border border-zinc-700 min-h-96"
   >
     <!--! SEARCH -->
     <form
@@ -22,14 +22,16 @@ import { fileBrowserStates } from "./fileBrowserStore";
     </form>
 
     <!--! FILE LIST -->
-    <ul>
+    <ul class="overflow-y-scroll max-h-96">
       <FileBrowserItem
+        :tabindex="2 + index"
         v-for="(file, index) in filteredFiles"
         :key="index"
         :fileName="file.name"
+        :files="file?.files"
       />
     </ul>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -46,9 +48,21 @@ export default {
 
   computed: {
     filteredFiles() {
-      return fileBrowserStates.files.filter((file) =>
-        file.name.toLowerCase().includes(this.searchInput.toLowerCase())
+      let filteredFiles = [];
+
+      filteredFiles = fileBrowserStates.files.filter(
+        (file) =>
+          //If the filename includes the search string
+          file.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
+          //Or if the folder has files whose names include the search strings
+          file?.files?.filter((fileInFolder) =>
+            fileInFolder.name
+              .toLowerCase()
+              .includes(this.searchInput.toLowerCase())
+          )[0]
       );
+
+      return filteredFiles;
     },
   },
 

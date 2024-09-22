@@ -28,7 +28,10 @@ export default {
     LanguageSelector,
     FileBrowser,
   },
+
+  mounted() {
+    // Start a websocket with files
+    // Start a websocket with editor
+  },
 };
 </script>
-
-<style scoped></style>

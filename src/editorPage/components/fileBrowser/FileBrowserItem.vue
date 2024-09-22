@@ -1,34 +1,39 @@
 <script setup>
 import { fileBrowserStates } from "./fileBrowserStore.js";
 </script>
+
 <template>
   <li
-    @dblclick="handleFileDoubleClick"
     :class="[
-      'hover:pl-5 mb-2 pl-3 py-1 text-zinc-400 hover:text-zinc-200 hover:cursor-pointer select-none rounded-md focus:pl-5 transition-all duration-200',
-      fileBrowserStates.selectedFile?.name === fileName
-        ? 'bg-zinc-700 text-zinc-200'
-        : '',
+      ' py-1 text-zinc-400 select-none rounded-md transition-all duration-200',
     ]"
   >
-    {{ fileName }}
+    <FileBrowserFile v-if="!files" :fileName="fileName" />
+    <FileBrowserFolder v-else :folderName="fileName" :files="files" />
   </li>
 </template>
 
 <script>
+import FileBrowserFile from "./FileBrowserFile.vue";
+import FileBrowserFolder from "./FileBrowserFolder.vue";
+
 export default {
   name: "FileBrowserItem",
+
+  components: {
+    FileBrowserFolder,
+    FileBrowserFile,
+  },
 
   props: {
     fileName: {
       type: String,
       required: true,
     },
-  },
 
-  methods: {
-    handleFileDoubleClick() {
-      fileBrowserStates.selectFileByName(this.fileName);
+    files: {
+      type: Array,
+      required: false,
     },
   },
 };
