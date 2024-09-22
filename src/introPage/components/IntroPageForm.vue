@@ -36,6 +36,7 @@ export default {
   methods: {
     handleFormSubmission() {
       user.setName(this.name);
+      user.generateId();
       this.$router.push("/editor");
     },
   },

@@ -1,3 +1,6 @@
+<script setup>
+import { editorLanguageSelectorStore } from "@/editorPage/components/languageSelector/store/editorLanguageSelectorStore.js";
+</script>
 <template>
   <div class="bg-zinc-900 text-zinc-100 min-h-screen p-4">
     <h1
@@ -8,30 +11,41 @@
 
     <LanguageSelector class="mb-4"></LanguageSelector>
     <FileBrowser class=""></FileBrowser>
-    <!-- <CodeEditor
-    class=""
-    :editorLanguage="editorLanguageSelectorStore.currentLanguageValue"
-  ></CodeEditor> -->
+    <CodeEditor
+      v-if="editorInitialContent"
+      class=""
+      :initialEditorValue="editorInitialContent"
+      :editorLanguage="editorLanguageSelectorStore.currentLanguageValue"
+    ></CodeEditor>
   </div>
 </template>
 
 <script>
-// import CodeEditor from "@/components/CodeEditor.vue";
+import CodeEditor from "./components/CodeEditor.vue";
 import FileBrowser from "@/editorPage/components/fileBrowser/FileBrowser.vue";
 import LanguageSelector from "@/editorPage/components/languageSelector/LanguageSelector.vue";
-// import { editorLanguageSelectorStore } from "@/components/languageSelector/store/editorLanguageSelectorStore.js";
+import EditorWebSocket from "./utils/editorWebSocketClass.js";
 
 export default {
   name: "EditorPageView",
   components: {
-    //     CodeEditor,
+    CodeEditor,
     LanguageSelector,
     FileBrowser,
   },
 
-  mounted() {
-    // Start a websocket with files
-    // Start a websocket with editor
+  created() {
+    this.editorWebSocketInstance = new EditorWebSocket();
+    setTimeout(() => {
+      this.editorInitialContent =
+        this.editorWebSocketInstance.getInitialEditorContent();
+    }, 2000);
+  },
+  data() {
+    return {
+      editorWebSocketInstance: null,
+      editorInitialContent: null,
+    };
   },
 };
 </script>
