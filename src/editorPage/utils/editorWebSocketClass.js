@@ -21,7 +21,7 @@ class EditorWebSocket extends GeneralWebSocket {
       } else if (!this.hasEditorInitialData) {
         let initialContent = message;
         this.initialEditorContent = initialContent;
-        // Create the editor with the initial content
+        this.hasEditorInitialData = true;
       } else {
         // Hande edits
       }
