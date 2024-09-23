@@ -1,10 +1,10 @@
 <script setup>
-import EditorWebSocket from "../utils/editorWebSocketClass.js";
+import { codeEditorStates } from "./codeEditorStore.js";
 </script>
 <template>
   <div class="w-full h-80">
     <vue-monaco-editor
-      v-model:value="code"
+      v-model:value="codeEditorStates.code"
       theme="vs-dark"
       :defaultValue="initialEditorValue"
       :language="editorLanguage"
@@ -16,7 +16,6 @@ import EditorWebSocket from "../utils/editorWebSocketClass.js";
 
 <script>
 import { VueMonacoEditor } from "@guolao/vue-monaco-editor";
-// import { WebSocketInstance } from "@/utils/websockets/editorSocket.js";
 
 export default {
   name: "CodeEditor",
@@ -31,6 +30,11 @@ export default {
       type: String,
       required: true,
     },
+
+    editorWebSocketInstance: {
+      type: Object,
+      required: true,
+    },
   },
 
   components: {
@@ -39,8 +43,9 @@ export default {
 
   methods: {
     handleEditorMount(editor) {
-      this.editorRef = editor;
+      codeEditorStates.setEditorRef(editor);
       console.log("Editor mounted");
+      this.editorWebSocketInstance.setupEditorSendMessage();
     },
   },
 
@@ -51,13 +56,7 @@ export default {
         formatOnType: true,
         formatOnPaste: true,
       },
-
-      code: "",
-
-      editorRef: null,
     };
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

@@ -9,14 +9,16 @@ import { editorLanguageSelectorStore } from "@/editorPage/components/languageSel
       EditorPage
     </h1>
 
-    <LanguageSelector class="mb-4"></LanguageSelector>
-    <FileBrowser class=""></FileBrowser>
+    <LanguageSelector class="mb-4" />
+
+    <FileBrowser />
+
     <CodeEditor
       v-if="editorInitialContent"
-      class=""
+      :editorWebSocketInstance="editorWebSocketInstance"
       :initialEditorValue="editorInitialContent"
       :editorLanguage="editorLanguageSelectorStore.currentLanguageValue"
-    ></CodeEditor>
+    />
   </div>
 </template>
 
