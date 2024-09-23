@@ -47,7 +47,8 @@ class EditorWebSocket extends GeneralWebSocket {
   }
 
   processInitialEditorContent(message) {
-    this.initialEditorContent = message;
+    let handledMessage = message === "" ? " " : message;
+    this.initialEditorContent = handledMessage;
     this.hasEditorInitialData = true;
   }
 
@@ -63,6 +64,8 @@ class EditorWebSocket extends GeneralWebSocket {
     codeEditorStates.editorRef.onDidChangeModelContent((event) => {
       if (!this.isApplyingRemoteChange) {
         let change = event.changes[0];
+
+        console.log(change);
         this.webSocketInstance.send(
           JSON.stringify({
             clientId: this.id,
